@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Déactivation de la Bombe</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #container {
+            max-width: 800px;
+            padding: 20px;
+            border: 2px solid white;
+            border-radius: 10px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        #timer {
+            font-size: 3em; /* Plus grand */
+            margin-bottom: 20px;
+        }
+        #codeInput {
+            padding: 10px;
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+        #deactivateButton {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #result {
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <img src="https://img.20mn.fr/BmRfn0kPSKWCb7dOzlMFAik/722x460_nuclear-blast-and-mushroom-cloud-in-a-city-skyline-the-explosion-is-destroying-buildings-and-causing-chaos-and-destruction-apocalyptic-mood-devastation-of-war-or-the-aftermath-of-a-disaster-ibxdmr09925382-image-broker-com-dmitry-rukhlenko-sipa-2401021856" alt="Explosion nucléaire">
+        <div id="timer">10:00</div>
+        <input type="text" id="codeInput" placeholder="Entrez le code de désactivation">
+        <button id="deactivateButton">Désactiver la Bombe</button>
+        <div id="result"></div>
+    </div>
+    
+    <script>
+        // Countdown Timer
+        let minutes = 10;
+        let seconds = 0;
+        
+        const timerElement = document.getElementById('timer');
+        
+        function updateTimer() {
+            if (seconds === 0) {
+                if (minutes === 0) {
+                    clearInterval(timerInterval);
+                    alert("Temps écoulé ! La bombe a explosé.");
+                    return;
+                } else {
+                    minutes--;
+                    seconds = 59;
+                }
+            } else {
+                seconds--;
+            }
+            
+            timerElement.textContent = 
+                String(minutes).padStart(2, '0') + ':' + 
+                String(seconds).padStart(2, '0');
+        }
+        
+        const timerInterval = setInterval(updateTimer, 1000);
+        
+        // Deactivation Button
+        const deactivateButton = document.getElementById('deactivateButton');
+        const codeInput = document.getElementById('codeInput');
+        const resultElement = document.getElementById('result');
+        
+        deactivateButton.addEventListener('click', () => {
+            const code = codeInput.value;
+            const correctCode = "arretboom3h";
+            const secretCorrectCode = btoa(correctCode);
+            
+            if (btoa(code) === secretCorrectCode) {
+                clearInterval(timerInterval);
+                resultElement.textContent = "Réussi";
+                resultElement.style.color = "green";
+            } else {
+                resultElement.textContent = "Erreur";
+                resultElement.style.color = "red";
+            }
+        });
+    </script>
+</body>
+</html>
